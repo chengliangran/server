@@ -6,6 +6,7 @@ import com.company.component.HttpResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -25,26 +26,30 @@ public class HttpProcessor implements Runnable {
         this.socket=socket;
         Thread thread=new Thread(this);
         thread.start();
-
     }
 
     @Override
+    //处理socket并将结果发送给context
     public void run() {
-      if (socket!=null){
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (socket!=null){
           InputStream inputStream=null;
           OutputStream outputStream=null;
           try {
               inputStream=socket.getInputStream();
               outputStream=socket.getOutputStream();
               StringBuffer requestString=new StringBuffer();
-              int index=0;
-              byte[] buf=new byte[2048];
-              while (index!=-1){
-                  index=inputStream.read(buf);
-                  requestString.append(new String(buf,0,buf.length));
-              }
               HttpRequest request=new HttpRequest(inputStream);
               HttpResponse response=new HttpResponse(request,outputStream);
+              if (server.getContext()!=null){
+                  server.getContext().invoke(request,response);
+              }else {
+                  System.out.println("没有拿到context");
+              }
           } catch (IOException e) {
               e.printStackTrace();
           }
@@ -54,6 +59,7 @@ public class HttpProcessor implements Runnable {
           } catch (IOException e) {
               e.printStackTrace();
           }
+          server.recycle(this);
       } else {
           System.out.println("没有socket");
       }

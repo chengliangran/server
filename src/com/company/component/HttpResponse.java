@@ -1,5 +1,7 @@
 package com.company.component;
 
+import com.company.container.MyContext;
+
 import java.io.OutputStream;
 
 /**
@@ -7,10 +9,31 @@ import java.io.OutputStream;
  */
 public class HttpResponse {
     HttpRequest request;
+
     OutputStream outputStream;
+
+    MyContext context=null;
+
+    public MyContext getContext() {
+        return context;
+    }
+
+    public void setContext(MyContext context) {
+        this.context = context;
+    }
 
     public HttpResponse(HttpRequest request, OutputStream outputStream) {
         this.request = request;
         this.outputStream = outputStream;
     }
+
+    public HttpRequest getRequest() {
+        return request;
+    }
+
+    public OutputStream getOutputStream() {
+        return outputStream;
+    }
+
+
 }
