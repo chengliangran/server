@@ -31,11 +31,7 @@ public class HttpProcessor implements Runnable {
     @Override
     //处理socket并将结果发送给context
     public void run() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         if (socket!=null){
           InputStream inputStream=null;
           OutputStream outputStream=null;
@@ -45,6 +41,11 @@ public class HttpProcessor implements Runnable {
               StringBuffer requestString=new StringBuffer();
               HttpRequest request=new HttpRequest(inputStream);
               HttpResponse response=new HttpResponse(request,outputStream);
+              try {
+                  request.init();
+              } catch (Exception e) {
+                  e.printStackTrace();
+              }
               if (server.getContext()!=null){
                   server.getContext().invoke(request,response);
               }else {

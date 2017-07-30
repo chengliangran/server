@@ -1,6 +1,8 @@
 package com.company.component;
 
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/7/27.
@@ -9,7 +11,11 @@ public class HttpRequest {
 
     InputStream inputStream;
 
+    //消息报文参数
     String requestStr=null;
+
+    Map<String,String> headers=new HashMap<>();
+    boolean headersParsed=false;
 
     public HttpRequest(InputStream inputStream) {
         this.inputStream = inputStream;
@@ -64,6 +70,28 @@ public class HttpRequest {
             }
         }else {
             return null;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    public Map<String, String> getHeaders(){
+        if (!headersParsed){
+
+            String[] lines=requestStr.split("\r\n");
+            for (int i = 1; i < lines.length-1; i++) {
+                String[] keyValue=lines[i].split(":");
+                if (keyValue.length==2){
+                    headers.put(keyValue[0],keyValue[1]);
+                }
+            }
+            headersParsed=true;
+            return headers;
+        }else {
+            return headers;
         }
     }
 
