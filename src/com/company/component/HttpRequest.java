@@ -80,8 +80,10 @@ public class HttpRequest {
 
     public Map<String, String> getHeaders(){
         if (!headersParsed){
-
-            String[] lines=requestStr.split("\r\n");
+            String[] lines=null;
+            if (requestStr!=null){
+                lines=requestStr.split("\r\n");
+            }
             for (int i = 1; i < lines.length-1; i++) {
                 String[] keyValue=lines[i].split(":");
                 if (keyValue.length==2){

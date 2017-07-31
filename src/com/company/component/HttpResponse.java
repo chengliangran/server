@@ -25,6 +25,9 @@ public class HttpResponse {
     public HttpResponse(HttpRequest request, OutputStream outputStream) {
         this.request = request;
         this.outputStream = outputStream;
+
+
+
     }
 
     public HttpRequest getRequest() {

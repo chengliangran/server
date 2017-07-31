@@ -3,6 +3,7 @@ package com.company;
 import com.company.container.MyContext;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -50,14 +51,14 @@ public class HttpServer {
         if (processors.size()==0){
             if (curProcessors<maxProcessors){
                 addProcessor();
-                System.out.println("当前的processor数量为"+(processors.size()-1));
+                System.out.println("当前的processor名字为"+processors.get(processors.size()-1).getName());
                 return processors.remove(processors.size()-1);
             }else {
                 System.out.println("已经用完了processor");
                 return null;
             }
         }else {
-            System.out.println("当前的processor数量为"+(processors.size()-1));
+            System.out.println("当前的processor名字为"+processors.get(processors.size()-1).getName());
             return processors.remove(processors.size()-1);
         }
     }

@@ -2,6 +2,7 @@ package com.company.container;
 
 import com.company.component.HttpRequest;
 import com.company.component.HttpResponse;
+import com.company.component.LorderFactory;
 import oracle.jrockit.jfr.events.RequestableEventEnvironment;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class MyContext {
 
     Pipeline pipeline=new Pipeline();
 
-
+    LorderFactory lf=new LorderFactory();
 
     BasicValve valve=new BasicValve();
 
